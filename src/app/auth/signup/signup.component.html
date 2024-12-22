@@ -1,37 +1,93 @@
-<div class="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <div class="mb-4">
-        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
-        <input id="fullName" formControlName="fullName" type="text" placeholder="John Doe" 
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-        <div *ngIf="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched" 
-          class="text-red-500 text-xs mt-1">Full Name is required</div>
-      </div>
-      <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input id="email" formControlName="email" type="email" placeholder="example@mail.com" 
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-        <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" 
-          class="text-red-500 text-xs mt-1">Please enter a valid email</div>
-      </div>
-      <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input id="password" formControlName="password" type="password" placeholder="••••••••" 
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-        <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" 
-          class="text-red-500 text-xs mt-1">Password is required</div>
-      </div>
-      <div class="mb-4">
-        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-        <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="••••••••" 
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-        <div *ngIf="signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched" 
-          class="text-red-500 text-xs mt-1">Passwords must match</div>
-      </div>
-      <button type="submit" [disabled]="signupForm.invalid" class="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-        Sign Up
-      </button>
-    </form>
+<!-- Muddy Ramadhan Fakih -->
+<div class="flex h-screen">
+  <!-- Sidebar with website title -->
+  <div class="w-2/5 bg-blue-500 text-white flex flex-col justify-center items-center">
+    <h1 class="text-4xl font-bold mb-4">Order Management System</h1>
+    <p class="text-lg text-center px-4">
+      A modern platform for managing and tracking your orders efficiently and easily.
+    </p>
   </div>
-  
+
+  <!-- Form Section -->
+  <div class="flex-grow flex items-center justify-start px-16">
+    <div class="w-full max-w-md bg-white shadow-lg rounded-lg px-8 py-10">
+      <h2 class="text-center text-2xl font-semibold mb-6">Sign Up</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <!-- Full Name -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="fullName">Full Name</label>
+          <input
+            id="fullName"
+            type="text"
+            formControlName="fullName"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            placeholder="Enter your full name"
+          />
+          <p *ngIf="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched"
+             class="text-red-500 text-xs italic mt-1">
+            Full name is required.
+          </p>
+        </div>
+        <!-- Email -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            placeholder="Enter your email"
+          />
+          <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+             class="text-red-500 text-xs italic mt-1">
+            Valid email is required.
+          </p>
+        </div>
+        <!-- Password -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            placeholder="Enter your password"
+          />
+          <p *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+             class="text-red-500 text-xs italic mt-1">
+            Password must be at least 6 characters.
+          </p>
+        </div>
+        <!-- Confirm Password -->
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            placeholder="Confirm your password"
+          />
+        </div>
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="signupForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+        >
+          Sign Up
+        </button>
+      </form>
+      <!-- Navigation Link -->
+      <p class="text-center text-sm mt-4">
+        Already have an account?
+        <a
+          routerLink="/login"
+          class="text-blue-500 hover:underline font-semibold hover:text-blue-700 transition duration-300 cursor-pointer"
+        >
+          Login
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

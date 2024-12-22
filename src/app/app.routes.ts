@@ -4,10 +4,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
-    { path: 'signup', component: SignupComponent },
-    { path: 'login', component: LoginComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' }
-  ];
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, 
+  { path: 'login', component: LoginComponent }, 
+  { path: 'signup', component: SignupComponent } 
+];
   
   @NgModule({
     imports: [RouterModule.forRoot(routes)],

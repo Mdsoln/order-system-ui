@@ -1,11 +1,12 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [NgIf, CommonModule, ReactiveFormsModule]
+  styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      emailOrUsername: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

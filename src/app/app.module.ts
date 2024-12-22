@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { AppRoutingModule } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -12,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     BrowserModule,
     AuthModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
