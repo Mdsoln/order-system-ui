@@ -26,4 +26,8 @@ export class LoginComponent implements OnInit {
       // Add login API call here
     }
   }
+
+  onSignUpClick(): void {
+    console.log('Sign Up link clicked');
+  }
 }
