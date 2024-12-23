@@ -1,6 +1,7 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,19 +11,45 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  isLoading = false;
+  signupSuccess: boolean = false;
+  signupError: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['']
+    }, { validators: this.confirmPasswordValidator 
+    });    
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.signupForm.valid) {
-      console.log('Form Submitted', this.signupForm.value);
+      this.isLoading = true;
+      // Mock API call
+      this.authService.signup(this.signupForm.value).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.signupSuccess = true;
+          this.signupForm.reset();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.signupError = true;
+          console.error(err);
+        },
+      });
     }
   }
+  
+
+  confirmPasswordValidator(group: FormGroup): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { notMatching: true };
+  }
+  
 }

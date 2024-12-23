@@ -68,15 +68,21 @@
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
             placeholder="Confirm your password"
           />
+          <p *ngIf="signupForm.errors?.['notMatching']" class="text-red-500 text-xs italic mt-1">
+            Passwords do not match.
+          </p>                  
         </div>
         <!-- Submit Button -->
         <button
           type="submit"
-          [disabled]="signupForm.invalid"
+          [disabled]="signupForm.invalid || isLoading"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
         >
-          Sign Up
+          <span *ngIf="isLoading" class="loader"></span>
+          <span *ngIf="!isLoading">Sign Up</span>
         </button>
+        <p *ngIf="signupSuccess" class="text-green-500 text-sm mt-2">Signup successful! Please log in</p>
+        <p *ngIf="signupError" class="text-red-500 text-sm mt-2">Signup failed. Please try again.</p>
       </form>
       <!-- Navigation Link -->
       <p class="text-center text-sm mt-4">

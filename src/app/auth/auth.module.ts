@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from '../app.routes';
+
 
 @NgModule({
   declarations: [
@@ -11,7 +14,9 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule,
+    AppRoutingModule
   ],
   exports: [
     SignupComponent,
