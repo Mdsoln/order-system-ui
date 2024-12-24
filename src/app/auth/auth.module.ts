@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from '../app.routes';
 
 
 @NgModule({
@@ -15,8 +14,7 @@ import { AppRoutingModule } from '../app.routes';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,
-    AppRoutingModule
+    RouterModule 
   ],
   exports: [
     SignupComponent,
