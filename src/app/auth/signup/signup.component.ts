@@ -15,6 +15,7 @@ export class SignupComponent {
   isLoading = false;
   signupSuccess: boolean = false;
   signupError: boolean = false;
+  isSubmitted: boolean = false;
 
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -30,11 +31,14 @@ export class SignupComponent {
   onSubmit() {
     if (this.signupForm.valid) {
       this.isLoading = true;
+      this.isSubmitted = true;
       this.authService.signup(this.signupForm.value).subscribe({
         next: () => {
           this.isLoading = false;
           this.signupSuccess = true;
+          alert('Signup successful!');
           this.signupForm.reset();
+          this.isSubmitted = false;
           // Navigate to login page after success
           this.router.navigate(['/login']);
         },
@@ -49,7 +53,19 @@ export class SignupComponent {
     }
   }
   
-  
+  getFieldError(fieldName: string): string | null {
+    const control = this.signupForm.get(fieldName);
+    if (control?.hasError('required')) {
+      return 'This field is required';
+    }
+    if (control?.hasError('email')) {
+      return 'Please enter a valid email address';
+    }
+    if (control?.hasError('minlength')) {
+      return `Minimum length is ${control.errors?.['minlength'].requiredLength}`;
+    }
+    return null;
+  }
 
   confirmPasswordValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
