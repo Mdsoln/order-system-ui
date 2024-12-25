@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  isLoading = false;
+  loginError: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -22,12 +26,22 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      // Add login API call here
+      this.isLoading = true;
+      // Mock API call for login
+      this.authService.login(this.loginForm.value).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.loginError = 'Invalid email/username or password';
+        },
+      });
     }
   }
 
-  onSignUpClick(): void {
-    console.log('Sign Up link clicked');
+  navigateToSignup() {
+    this.router.navigate(['/signup']);
   }
 }

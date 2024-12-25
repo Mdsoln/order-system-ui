@@ -13,6 +13,9 @@
     <div class="w-full max-w-md bg-white shadow-lg rounded-lg px-8 py-10">
       <h2 class="text-center text-2xl font-semibold mb-6">Sign Up</h2>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <p *ngIf="isSubmitted && signupForm.invalid" class="text-red-500 text-sm mb-4">
+          Please fill in all required fields before submitting.
+        </p>
         <!-- Full Name -->
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="fullName">Full Name</label>
@@ -30,18 +33,21 @@
         </div>
         <!-- Email -->
         <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
-            placeholder="Enter your email"
-          />
-          <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
-             class="text-red-500 text-xs italic mt-1">
-            Valid email is required.
-          </p>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+              placeholder="Enter your email"
+            />
+            <!-- Error Messages -->
+            <p *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('required')" class="text-red-500 text-xs mt-1">
+              Email is required
+            </p>
+            <p *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('email')" class="text-red-500 text-xs mt-1">
+              Enter a valid email
+            </p>
         </div>
         <!-- Password -->
         <div class="mb-4">
@@ -62,15 +68,18 @@
         <div class="mb-6">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">Confirm Password</label>
           <input
-            id="confirmPassword"
-            type="password"
-            formControlName="confirmPassword"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
-            placeholder="Confirm your password"
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          [ngClass]="{'border-red-500': signupForm.errors?.['notMatching']}"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+          placeholder="Confirm your password"
           />
-          <p *ngIf="signupForm.errors?.['notMatching']" class="text-red-500 text-xs italic mt-1">
-            Passwords do not match.
-          </p>                  
+          <p 
+          *ngIf="signupForm.errors?.['notMatching'] && signupForm.get('confirmPassword')?.touched" 
+          class="text-red-500 text-xs italic mt-1">
+          Passwords do not match.
+          </p>                 
         </div>
         <!-- Submit Button -->
         <button
@@ -87,13 +96,13 @@
       <!-- Navigation Link -->
       <p class="text-center text-sm mt-4">
         Already have an account?
-        <a
-          routerLink="/login"
+        <span
+          (click)="navigateToLogin()"
           class="text-blue-500 hover:underline font-semibold hover:text-blue-700 transition duration-300 cursor-pointer"
         >
           Login
-        </a>
-      </p>
+        </span>
+      </p>      
     </div>
   </div>
 </div>
